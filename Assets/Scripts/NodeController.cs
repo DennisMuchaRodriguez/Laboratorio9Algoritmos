@@ -2,26 +2,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class NodeController : MonoBehaviour
 {
-    public List<NodeController> adjacentNodes;
-    void Start()
+    public Lista<(NodeController node, float weight)> adjacentNodes;
+
+    void Awake() 
     {
-        
+        adjacentNodes = new Lista<(NodeController, float)>();
     }
 
-  
     void Update()
     {
-        
+
     }
-    public void AddAdjacentNode(NodeController node)
+
+    public void AddAdjacentNode(NodeController node, float weight)
     {
-        adjacentNodes.Add(node);
+        adjacentNodes.Add((node, weight));
+
     }
-    public NodeController SelecRandomAdjancent()
+
+    public (NodeController, float)  SelectRandomAdjacent()
     {
-        int index = Random.Range(0, adjacentNodes.Count);
-        return adjacentNodes[index];
+        int index = Random.Range(0, adjacentNodes.Length);
+        return adjacentNodes.Get(index);
     }
 }

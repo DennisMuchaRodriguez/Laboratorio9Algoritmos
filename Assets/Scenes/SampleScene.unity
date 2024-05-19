@@ -297,8 +297,7 @@ MonoBehaviour:
   nodePositionTxt: {fileID: 4900000, guid: 384e71710ede0844d84a50e4f7519d3c, type: 3}
   arrayNodePositions: []
   currentNodePositions: []
-  AllNodes: []
-  nodeConectionsTxt: {fileID: 4900000, guid: 40b5d388ac0526446bcc26faba49ee9f, type: 3}
+  nodeConectionsTxt: {fileID: 4900000, guid: 26f4e82a8a17a24498ab98d234b707f0, type: 3}
   arrayNodeConections: []
   currentNodeConections: []
   enemy: {fileID: 2030342317}
@@ -440,6 +439,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   objective: {fileID: 0}
   speedReference: {x: 0, y: 0}
+  energy: 10
+  maxEnergy: 10
+  restTime: 5
 --- !u!50 &2030342318
 Rigidbody2D:
   serializedVersion: 4

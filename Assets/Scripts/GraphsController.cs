@@ -8,17 +8,20 @@ public class GraphsController : MonoBehaviour
     public TextAsset nodePositionTxt;
     public string[] arrayNodePositions;
     public string[] currentNodePositions;
-    public List<GameObject> AllNodes;
+    public Lista<GameObject> AllNodes; 
     public TextAsset nodeConectionsTxt;
     public string[] arrayNodeConections;
     public string[] currentNodeConections;
     public EnemyControlle enemy;
+
     void Start()
     {
-       CreateNode();
-       CreateConnections();
-        SelecInitialNode();
+        AllNodes = new Lista<GameObject>(); 
+        CreateNode();
+        CreateConnections();
+        SelectInitialNode();
     }
+
     void CreateNode()
     {
         if (nodePositionTxt != null)
@@ -33,28 +36,40 @@ public class GraphsController : MonoBehaviour
             }
         }
     }
+
     void CreateConnections()
     {
-        if(nodeConectionsTxt != null)
+        if (nodeConectionsTxt != null)
         {
-            arrayNodeConections = nodeConectionsTxt.text.Split("\n");
-            for(int i = 0;i < arrayNodeConections.Length; i++)
+            arrayNodeConections = nodeConectionsTxt.text.Split('\n');
+            for (int i = 0; i < arrayNodeConections.Length; i++)
             {
-                currentNodeConections = arrayNodeConections[i].Split(",");
-                for(int j = 0; j < currentNodeConections.Length; j++)
+                currentNodeConections = arrayNodeConections[i].Split(',');
+                for (int j = 0; j < currentNodeConections.Length; j += 2)
                 {
-                    AllNodes[i].GetComponent<NodeController>().AddAdjacentNode(AllNodes[int.Parse(currentNodeConections[j])].GetComponent<NodeController>());
+                    int currentIndex = int.Parse(currentNodeConections[j]);
+                    float weight = float.Parse(currentNodeConections[j + 1]);
+
+                    if (AllNodes.Get(i) != null && AllNodes.Get(currentIndex) != null)
+                    {
+                        AllNodes.Get(i).GetComponent<NodeController>().AddAdjacentNode(AllNodes.Get(currentIndex).GetComponent<NodeController>(), weight);
+                    }
                 }
             }
         }
     }
-    void SelecInitialNode()
+
+    void SelectInitialNode()
     {
-        int index = Random.Range(0, AllNodes.Count);
-        enemy.objective = AllNodes[index];
+        if (AllNodes.Length > 0)
+        {
+            int index = Random.Range(0, AllNodes.Length);
+            enemy.objective = AllNodes.Get(index);
+        }
     }
+
     void Update()
     {
-        
+
     }
 }
