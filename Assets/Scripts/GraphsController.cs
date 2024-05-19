@@ -19,7 +19,8 @@ public class GraphsController : MonoBehaviour
         AllNodes = new Lista<GameObject>(); 
         CreateNode();
         CreateConnections();
-        SelectInitialNode();
+
+        SetupEnemyPath();
     }
 
     void CreateNode()
@@ -45,29 +46,25 @@ public class GraphsController : MonoBehaviour
             for (int i = 0; i < arrayNodeConections.Length; i++)
             {
                 currentNodeConections = arrayNodeConections[i].Split(',');
-                for (int j = 0; j < currentNodeConections.Length; j += 2)
-                {
-                    int currentIndex = int.Parse(currentNodeConections[j]);
-                    float weight = float.Parse(currentNodeConections[j + 1]);
+                int fromNodeIndex = int.Parse(currentNodeConections[0]);
+                int toNodeIndex = int.Parse(currentNodeConections[1]);
+                float weight = float.Parse(currentNodeConections[2]);
 
-                    if (AllNodes.Get(i) != null && AllNodes.Get(currentIndex) != null)
-                    {
-                        AllNodes.Get(i).GetComponent<NodeController>().AddAdjacentNode(AllNodes.Get(currentIndex).GetComponent<NodeController>(), weight);
-                    }
+                if (AllNodes.Get(fromNodeIndex) != null && AllNodes.Get(toNodeIndex) != null)
+                {
+                    AllNodes.Get(fromNodeIndex).GetComponent<NodeController>().AddAdjacentNode(AllNodes.Get(toNodeIndex).GetComponent<NodeController>(), weight);
                 }
             }
         }
     }
 
-    void SelectInitialNode()
-    {
-        if (AllNodes.Length > 0)
-        {
-            int index = Random.Range(0, AllNodes.Length);
-            enemy.objective = AllNodes.Get(index);
-        }
-    }
 
+    
+    void SetupEnemyPath()
+    {
+
+        enemy.InitializePath(AllNodes);
+    }
     void Update()
     {
 

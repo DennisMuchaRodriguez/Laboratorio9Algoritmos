@@ -23,7 +23,7 @@ public class NodeController : MonoBehaviour
 
     }
 
-    public (NodeController, float)  SelectRandomAdjacent()
+    public (NodeController node, float weight)  SelectRandomAdjacent()
     {
         int index = Random.Range(0, adjacentNodes.Length);
         return adjacentNodes.Get(index);
